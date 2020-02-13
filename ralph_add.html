@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Le Photo Upload Screen</title>
+	</head>
+	<body>
+		<form action="upload.php" method="post" enctype="multipart/form-data">
+			<table style="border: 70px;">
+			<tr>
+				<td style="width: 100px; text-align: left;">Photo Name:</td>
+				<td><input type="text" name="photoname" size="20" maxlength="20" /></td>
+			</tr>
+			<tr>
+				<td style="width: 100px; text-align: left;">Date Taken:</td>
+				<td><input type="text" name="datetaken" size="20" maxlength="20" /></td>
+			</tr>
+			<tr>
+				<td style="width: 100px; text-align: left;">Photographer:</td>
+				<td><input type="text" name="photographer" size="20" maxlength="20" /></td>
+			</tr>
+			<tr>
+				<td style="width: 100px; text-align: left;">Location:</td>
+				<td><input type="text" name="location" size="20" maxlength="20" /></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td style="text-align: center;"><input type="file" style="background-color:blue; color:white; width:160px" name="SelectFile" id="SelectFile" /></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td style="text-align: center;"><input type="submit" style="background-color:blue; color:white; width:160px" name="submit" value="Bitch" /></td>
+			</tr>
+			</table>
+		</form>
+	</body>
+</html>			
