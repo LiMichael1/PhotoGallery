@@ -13,7 +13,7 @@
 			</tr>
 			<tr>
 				<td style="width: 100px; text-align: left;">Date Taken:</td>
-				<td><input type="text" name="datetaken" size="20" maxlength="20" /></td>
+				<td><input type="php" name="datetaken" size="20" maxlength="20" /></td>
 			</tr>
 			<tr>
 				<td style="width: 100px; text-align: left;">Photographer:</td>
