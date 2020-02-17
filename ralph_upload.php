@@ -18,7 +18,7 @@
 			$uploadOK = 0;
 		}
 	}
-	
+
 	if(move_uploaded_file($_FILES["SelectFile"]["tmp_name"],$target_file))
 	{
 		echo "The file ".basename($_FILES["SelectFile"]["name"])." has been uploaded.";
