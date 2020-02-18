@@ -1,5 +1,4 @@
 <?php 
-include "sorting.php";
 
 class Photo {
     //Properties
@@ -46,14 +45,14 @@ function sortBy($arr, $opt)
         case 0:
             usort($arr, function($a, $b)
             {
-                return strnatcmp($a->get_fname(), $b->get_fname());
+                return strnatcmp(strtolower($a->get_fname()), strtolower($b->get_fname()));
             });
             break;
 
         case 1:
             usort($arr, function($a, $b)
             {
-                return strnatcmp($a->get_pname(), $b->get_pname());
+                return strnatcmp(strtolower($a->get_pname()), strtolower($b->get_pname()));
             });
             break;
 
@@ -67,14 +66,14 @@ function sortBy($arr, $opt)
         case 3: 
             usort($arr, function($a, $b)
             {
-                return strnatcmp($a->get_photographer(), $b->get_photographer());
+                return strnatcmp( strtolower($a->get_photographer()) , strtolower($b->get_photographer()));
             });
             break;
 
         case 4: 
             usort($arr, function($a, $b)
             {
-                return strnatcmp($a->get_location(), $b->get_location());
+                return strnatcmp(strtolower($a->get_location()), strtolower($b->get_location()));
             });
             break; 
 
@@ -83,15 +82,13 @@ function sortBy($arr, $opt)
     return $arr;
 }
 
-//test
+$p1 = new Photo("fw.jpg", "d", "2000-02-12", "b", "Chinatown");
+$p2 = new Photo("erw.png", "c", "2016-02-12", "a", "b");
 
-// $p1 = new Photo("fw.jpg", "d", "2000-02-12", "b", "Chinatown");
-// $p2 = new Photo("erw.png", "c", "2016-02-12", "a", "b");
+$array = array($p1, $p2);
 
-// $array = array($p1, $p2);
+$array = sortBy($array, 4);
 
-// $array = sortBy($array, 2);
-
-// echo $array[0]->get_date();
+echo $array[0]->get_location();
 
 ?>
