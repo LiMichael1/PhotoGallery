@@ -13,7 +13,7 @@
 			</tr>
 			<tr>
 				<td style="width: 100px; text-align: left;">Date Taken:</td>
-				<td><input type="php" name="datetaken" size="20" maxlength="20" /></td>
+				<td><input type="date" name="datetaken" size="20" maxlength="20" /></td>
 			</tr>
 			<tr>
 				<td style="width: 100px; text-align: left;">Photographer:</td>
@@ -33,18 +33,12 @@
 			</tr>
 			<tr>
 				<td></td>
-				<td style="text-align: center;"><input type="submit" formaction="/ralph_view.php" style="background-color:blue; color:white; width:160px" name="submit1" value="View Photos" /></td>
+				<td style="text-align: center;"><button type="submit" formaction="ralph_view.php" style="background-color:blue; color:white; width:160px" name="submit1"/>View Photos</button?</td>
 			</tr>
 			</table>
 		</form>
 
 		<?php
-			#If "View Photo" is pressed, it will redirect to the View Photos Page
-			if(isset($_Post["submit1"]))
-			{
-				header("Location::localhost/Assighnemnt1/PhotoGallery/ralph_view.php");
-			}
-
 			#If Upload is pressed, it will check to see if file was properly uploaded
 			if(isset($_POST["submit"]))
 			{
@@ -53,6 +47,8 @@
 				$uploadOK = 1;
 				$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 				$check = getimagesize($_FILES["SelectFile"]["tmp_name"]);
+
+				echo $target_file."<br>";
 
 				#Checks if file is valid.
 				if($check !== false)
@@ -66,10 +62,21 @@
 					$uploadOK = 0;
 				}
 
-
 				if(move_uploaded_file($_FILES["SelectFile"]["tmp_name"],$target_file))
 				{
+					#$fp = fopen("uploads\list.txt", 'w') or die("Unable to open file!");
+					file_put_contents("uploads/list.txt", basename($_FILES["SelectFile"]["name"]), FILE_APPEND);
+					file_put_contents("uploads/list.txt", "\n", FILE_APPEND);
+					file_put_contents("uploads/list.txt", $_POST['photoname'], FILE_APPEND);
+					file_put_contents("uploads/list.txt", "\n", FILE_APPEND);
+					file_put_contents("uploads/list.txt", $_POST['datetaken'], FILE_APPEND);
+					file_put_contents("uploads/list.txt", "\n", FILE_APPEND);
+					file_put_contents("uploads/list.txt", $_POST['photographer'], FILE_APPEND);
+					file_put_contents("uploads/list.txt", "\n", FILE_APPEND);
+					file_put_contents("uploads/list.txt", $_POST['location'], FILE_APPEND);
+					file_put_contents("uploads/list.txt", "\n\n", FILE_APPEND);
 					echo "The file ".basename($_FILES["SelectFile"]["name"])." has been uploaded.";
+					#fclose($fp);
 				}
 				else
 				{
