@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -37,53 +36,52 @@
 			</tr>
 			</table>
 		</form>
-
-		<?php
-			#If Upload is pressed, it will check to see if file was properly uploaded
-			if(isset($_POST["submit"]))
-			{
-				$target_dir = "uploads/";
-				$target_file = $target_dir.basename($_FILES["SelectFile"]["name"]);
-				$uploadOK = 1;
-				$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-				$check = getimagesize($_FILES["SelectFile"]["tmp_name"]);
-
-				echo $target_file."<br>";
-
-				#Checks if file is valid.
-				if($check !== false)
-				{
-					echo "File is an image - ".$check["mime"].". "."<br>";
-					$uploadOK = 1;
-				}
-				else
-				{
-					echo "File is not an image.";
-					$uploadOK = 0;
-				}
-
-				if(move_uploaded_file($_FILES["SelectFile"]["tmp_name"],$target_file))
-				{
-					#$fp = fopen("uploads\list.txt", 'w') or die("Unable to open file!");
-					file_put_contents("uploads/list.txt", basename($_FILES["SelectFile"]["name"]), FILE_APPEND);
-					file_put_contents("uploads/list.txt", "\n", FILE_APPEND);
-					file_put_contents("uploads/list.txt", $_POST['photoname'], FILE_APPEND);
-					file_put_contents("uploads/list.txt", "\n", FILE_APPEND);
-					file_put_contents("uploads/list.txt", $_POST['datetaken'], FILE_APPEND);
-					file_put_contents("uploads/list.txt", "\n", FILE_APPEND);
-					file_put_contents("uploads/list.txt", $_POST['photographer'], FILE_APPEND);
-					file_put_contents("uploads/list.txt", "\n", FILE_APPEND);
-					file_put_contents("uploads/list.txt", $_POST['location'], FILE_APPEND);
-					file_put_contents("uploads/list.txt", FILE_APPEND);
-					echo "The file ".basename($_FILES["SelectFile"]["name"])." has been uploaded.";
-					#fclose($fp);
-				}
-				else
-				{
-					echo "Fucking didn't work.";
-				}
-			}
-		?>
-
 	</body>
 </html>
+
+<?php
+	#If Upload is pressed, it will check to see if file was properly uploaded
+	if(isset($_POST["submit"]))
+	{
+		$target_dir = "uploads/";
+		$target_file = $target_dir.basename($_FILES["SelectFile"]["name"]);
+		$uploadOK = 1;
+		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+		$check = getimagesize($_FILES["SelectFile"]["tmp_name"]);
+
+		echo $target_file."<br>";
+
+		#Checks if file is valid.
+		if($check !== false)
+		{
+			echo "File is an image - ".$check["mime"].". "."<br>";
+			$uploadOK = 1;
+		}
+		else
+		{
+			echo "File is not an image.";
+			$uploadOK = 0;
+		}
+
+		if(move_uploaded_file($_FILES["SelectFile"]["tmp_name"],$target_file))
+		{
+			#$fp = fopen("uploads\list.txt", 'w') or die("Unable to open file!");
+			file_put_contents("uploads/list.txt", basename($_FILES["SelectFile"]["name"]), FILE_APPEND);
+			file_put_contents("uploads/list.txt", "\n", FILE_APPEND);
+			file_put_contents("uploads/list.txt", $_POST['photoname'], FILE_APPEND);
+			file_put_contents("uploads/list.txt", "\n", FILE_APPEND);
+			file_put_contents("uploads/list.txt", $_POST['datetaken'], FILE_APPEND);
+			file_put_contents("uploads/list.txt", "\n", FILE_APPEND);
+			file_put_contents("uploads/list.txt", $_POST['photographer'], FILE_APPEND);
+			file_put_contents("uploads/list.txt", "\n", FILE_APPEND);
+			file_put_contents("uploads/list.txt", $_POST['location'], FILE_APPEND);
+			file_put_contents("uploads/list.txt", "\n", FILE_APPEND);
+			echo "The file ".basename($_FILES["SelectFile"]["name"])." has been uploaded.";
+			#fclose($fp);
+		}
+		else
+		{
+			echo "Fucking didn't work.";
+		}
+	}
+?>
