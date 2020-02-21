@@ -1,3 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Fuck This</title>
+    <body>
+      <form method="post">
+      <table>
+      <h3>Choose Sort Method</h3>
+      <tr></tr>
+      <tr>
+        <select id="SortBy" name='SortBy' onchange='this.submit()'>>
+          <option value="name">Name</option>
+          <option value="date">Date</option>
+          <option value="photographer">Photographer</option>
+          <option value="location">Location</option>
+        </select>
+      </tr>
+    <tr>
+      <td style="text-align: center;"><button type="submit" name="sort"/>Sort</button></td>
+    </tr>
+    </table>
+  </form>
+    </body>
+  </head>
+
 <?php
   class Photo {
       //Properties
@@ -83,42 +108,16 @@
       return $arr;
   }
 
-
-
   $dir_path = "uploads/";
   $extensions_ary = array('jpg','jpeg','png');
-  echo "$dir_path"."<br>";
-  if(is_dir($dir_path))
-  {
-    $files = scandir($dir_path);
-
-    for($i = 0; $i < count($files); $i++)
-    {
-      if($files[$i] != '.' && $files[$i] != '..')
-      {
-        #echo "File Name -> $files[$i]<br>";
-
-        $file = pathinfo($files[$i]);
-        $extension = strtolower($file['extension']);
-        #echo "File Extension->$extension<br>";
-
-        //echo in_array($extension,$extensions_ary)
-        if(in_array($extension,$extensions_ary))
-        {
-          echo "<img src='$dir_path$files[$i]' style='width:100px;height:100px;'><br>";
-        }
-        else{
-          echo "not working.<br><br>";
-        }
-      }
-    }
-  }
+  $selected_key = $_POST['SortBy'];
 
   $file = fopen("C:\wamp64\www\PhotoGallery\uploads\list.txt", 'r');
   flock($file, LOCK_SH);
 
   $photoArr = [];
 
+  #Loads array with objects of photos
   while (!feof($file))
   {
     $fname = fgets($file);
@@ -132,9 +131,35 @@
     array_push($photoArr, $p1);
   }
 
-  for($x = 0; $x < 4; $x++)
+  if($selected_key == 'name')
   {
-    echo $photoArr[$x]->get_location()."<br>";
+    $photoArr = sortBy($photoArr, 1);
   }
+  elseif ($selected_key == 'date') {
+    $photoArr = sortBy($photoArr, 2);
+  }
+  elseif ($selected_key == 'photographer')
+  {
+    $photoArr = sortBy($photoArr, 3);
+  }
+  elseif ($selected_key == 'location') {
+    $photoArr = sortBy($photoArr, 4);
+  }
+
+  #Displays each photo
+  for($x = 0; $x < sizeof($photoArr); $x++)
+  {
+    $fname = $photoArr[$x]->get_fname();
+    echo "File Name: $fname<br>";
+    echo $photoArr[$x]->get_pname()."<br>";
+    echo $photoArr[$x]->get_date()."<br>";
+    echo $photoArr[$x]->get_photographer()."<br>";
+    echo $photoArr[$x]->get_location()."<br>";
+    #echo "$dir_path$fname"."<\t\t>";
+    echo "<img src='$dir_path$fname' style='width:33%;height:33%;'>"."\t\t<br>";
+  }
+
+  flock($file, LOCK_UN);
+  fclose($file);
 
 ?>
