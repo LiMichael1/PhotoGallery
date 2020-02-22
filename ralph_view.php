@@ -19,7 +19,7 @@
       <td style="text-align: center;"><button type="submit" name="sort"/>Sort</button></td>
     </tr>
     </table>
-  </form>
+    </form>
     </body>
   </head>
 
@@ -129,10 +129,11 @@
 
     $p1 = new Photo($fname, $pname, $Date, $Photographer, $Location, $photo_location);
     array_push($photoArr, $p1);
-
-    echo sizeof($photoArr)." $fname $pname $Date $Photographer $Location"."<br>";
   }
 
+  unset($photoArr[sizeof($photoArr)-1]);
+
+  #Gets information from dropdown to sort.
   if($selected_key == 'name')
   {
     $photoArr = sortBy($photoArr, 1);
@@ -145,7 +146,8 @@
   {
     $photoArr = sortBy($photoArr, 3);
   }
-  elseif ($selected_key == 'location') {
+  elseif ($selected_key == 'location')
+  {
     $photoArr = sortBy($photoArr, 4);
   }
 
@@ -163,5 +165,4 @@
 
   flock($file, LOCK_UN);
   fclose($file);
-
 ?>
