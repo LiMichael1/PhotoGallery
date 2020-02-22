@@ -1,19 +1,101 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>PHOTO GALLERY</title>
-  </head>
-  <body>
-<h1>Add Photo To Gallery</h1>
-<form action="testV01.php" method="post">
-  Photo Name: <input type="text" name="photo_name"><br>
-  Date Taken: <input type="date" name="date_taken"><br>
-  Photographer: <input type="text" name="photographer"><br>
-  Location: <input type="text" name="location"><br>
-  Upload Image: <input accept="image/*"  type="file" name="image"><br>
+  	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+		<title>Upload Photos</title>
+		<style>
+			.center-form {
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+	<body class='container'>
+		<header>
+		    <h1 class='text-center'>Upload Photos</h1>
+		</header>
+			<div class='card'>
+				<div class='input-group card-body'>
+					<form class='center-form' method="post" enctype="multipart/form-data">
+						<div class='form-group'>
+							<label for="photoname">Photo Name: </label>
+							<input class='form-control ' type="text" name="photoname" required size="20" maxlength="20" />
+						</div>
 
-  <input type="submit" name="submit_ZA_BUTTON">
-</form>
-  </body>
+						<div class='form-group'>
+							<label for="datetaken">Date Taken:</label>
+							<input class='form-control' type="date" name="datetaken" required size="20" maxlength="20" />
+						</div>
+
+						<div class='form-group'>
+							<label for="Photographer">Photographer</label>
+							<input class='form-control' type="text" name="photographer" required size="20" maxlength="20" />
+						</div>
+
+						<div class='form-group'>
+							<label for="location">Location</label>
+							<input class='form-control' type="text" name="location" requiredsize="20" maxlength="20" />
+						</div>
+
+						<div class='form group'>
+							<label for="SelectFile">Select File: </label>
+							<input class='form-control' type="file" name="SelectFile" id="SelectFile" />
+						</div>
+
+							<input class='my-3 btn btn-primary' type="submit" name="submit" value="Upload"/>
+
+							<button class='btn btn-danger' type="submit" formaction="gallery.php" formnovalidate name="submit1">View Photos</button>
+
+
+					</form>
+				</div>
+			</div>
+	</body>
 </html>
+
+<?php
+	#If Upload is pressed, it will check to see if file was properly uploaded
+	if(isset($_POST["submit"]))
+	{
+		$target_dir = "uploads/";
+		$target_file = $target_dir.basename($_FILES["SelectFile"]["name"]);
+		$uploadOK = 1;
+		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+		$check = getimagesize($_FILES["SelectFile"]["tmp_name"]);
+
+		echo $target_file."<br>";
+
+		#Checks if file is valid.
+		if($check !== false)
+		{
+			echo "File is an image - ".$check["mime"].". "."<br>";
+			$uploadOK = 1;
+		}
+		else
+		{
+			echo "File is not an image.";
+			$uploadOK = 0;
+		}
+
+		if(move_uploaded_file($_FILES["SelectFile"]["tmp_name"],$target_file))
+		{
+			#$fp = fopen("uploads\list.txt", 'w') or die("Unable to open file!");
+			file_put_contents("uploads/list.txt", basename($_FILES["SelectFile"]["name"]), FILE_APPEND);
+			file_put_contents("uploads/list.txt", "\n", FILE_APPEND);
+			file_put_contents("uploads/list.txt", $_POST['photoname'], FILE_APPEND);
+			file_put_contents("uploads/list.txt", "\n", FILE_APPEND);
+			file_put_contents("uploads/list.txt", $_POST['datetaken'], FILE_APPEND);
+			file_put_contents("uploads/list.txt", "\n", FILE_APPEND);
+			file_put_contents("uploads/list.txt", $_POST['photographer'], FILE_APPEND);
+			file_put_contents("uploads/list.txt", "\n", FILE_APPEND);
+			file_put_contents("uploads/list.txt", $_POST['location'], FILE_APPEND);
+			file_put_contents("uploads/list.txt", "\n", FILE_APPEND);
+			echo "The file ".basename($_FILES["SelectFile"]["name"])." has been uploaded.";
+			#fclose($fp);
+		}
+		else
+		{
+			echo "Fucking didn't work.";
+		}
+	}
+?>
