@@ -129,13 +129,16 @@
 
     $p1 = new Photo($fname, $pname, $Date, $Photographer, $Location, $photo_location);
     array_push($photoArr, $p1);
+
+    echo sizeof($photoArr)." $fname $pname $Date $Photographer $Location"."<br>";
   }
 
   if($selected_key == 'name')
   {
     $photoArr = sortBy($photoArr, 1);
   }
-  elseif ($selected_key == 'date') {
+  elseif ($selected_key == 'date')
+  {
     $photoArr = sortBy($photoArr, 2);
   }
   elseif ($selected_key == 'photographer')
@@ -155,7 +158,6 @@
     echo $photoArr[$x]->get_date()."<br>";
     echo $photoArr[$x]->get_photographer()."<br>";
     echo $photoArr[$x]->get_location()."<br>";
-    #echo "$dir_path$fname"."<\t\t>";
     echo "<img src='$dir_path$fname' style='width:33%;height:33%;'>"."\t\t<br>";
   }
 
