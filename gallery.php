@@ -5,69 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Indie+Flower|Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/gallery.css">
     <title>View Photos</title>
-    <style>
-      .photo-container-size {
-        width: 33%;
-      }
 
-      body {
-        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-        background-size: 400% 400%;
-        animation: gradient 15s ease infinite;
-      }
-
-      @keyframes gradient {
-          0% {
-              background-position: 0% 50%;
-          }
-          50% {
-              background-position: 100% 50%;
-          }
-          100% {
-              background-position: 0% 50%;
-          }
-      }
-
-      h1 {
-        font-family: 'Indie Flower';
-        text-align: center;
-        font-size: 5rem;
-        text-shadow: 2px 2px 4px red;
-        color: white;
-      }
-
-      p{
-        font-family: 'Roboto Mono';
-      }
-
-      span {
-        font-family: 'Bree Serif';
-      }
-
-      .desc-size {
-        font-size: 1.4rem;
-      }
-
-      img {
-        transition: transform 1s;
-        border-radius: 30px;
-      }
-
-      img:hover {
-
-        transform: scale(1.5);
-      }
-
-      .card-color { background-color: #FFE5B4; }
-
-      .card-border { border-radius: 30px;}
-
-      .space-above {
-        margin-top : 5rem;
-      }
-
-    </style>
 </head>
 
 <body class="container">
@@ -132,7 +72,7 @@ elseif ($selected_key == 'location')
 
 // ----------------------------------------------------------------------
 
-echo "<div class='card text-center card-color card-border container '> ";
+echo "<div class='card text-center card-color card-border container space-below'> ";
 echo "<div class='row justify-content-around my-5'>";
 
 #Displays each photo
@@ -155,6 +95,7 @@ for($x = 0; $x < sizeof($photoArr); $x++)
   }
   
 }
+
 echo "</div>";
 echo "</div>";
 ?>

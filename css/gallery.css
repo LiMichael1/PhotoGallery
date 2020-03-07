@@ -1,0 +1,59 @@
+.photo-container-size {
+    width: 33%;
+  }
+
+  body {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+  }
+
+  @keyframes gradient {
+      0% {
+          background-position: 0% 50%;
+      }
+      50% {
+          background-position: 100% 50%;
+      }
+      100% {
+          background-position: 0% 50%;
+      }
+  }
+
+  h1 {
+    font-family: 'Indie Flower';
+    text-align: center;
+    font-size: 5rem;
+    text-shadow: 2px 2px 4px red;
+    color: white;
+  }
+
+  p{
+    font-family: 'Roboto Mono';
+  }
+
+  span {
+    font-family: 'Bree Serif';
+  }
+
+  img {
+    transition: transform 1s;
+    border-radius: 30px;
+  }
+
+  img:hover {
+
+    transform: scale(1.5);
+  }
+
+
+  /*   ---------------------------*/
+  .desc-size { font-size: 1.4rem; }
+
+  .card-color { background-color: #FFE5B4; }
+
+  .card-border { border-radius: 30px;}
+
+  .space-above { margin-top : 5rem; }
+
+  .space-below { padding-bottom: 5rem;}
