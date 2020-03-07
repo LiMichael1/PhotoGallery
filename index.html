@@ -44,7 +44,7 @@
 
 							<input class='my-3 btn btn-primary' type="submit" name="submit" value="Upload"/>
 
-							<button class='btn btn-danger' type="submit" formaction="gallery.php" formnovalidate name="submit1">View Photos</button>
+							<button class='btn btn-danger' type="submit" formaction="php/gallery.php" formnovalidate name="submit1">View Photos</button>
 
 
 					</form>
@@ -54,7 +54,7 @@
 </html>
 
 <?php
-	include "connect.php";
+	include "php/connect.php";
 	
 	#If Upload is pressed, it will check to see if file was properly uploaded
 	if(isset($_POST["submit"]))

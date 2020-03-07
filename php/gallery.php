@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Indie+Flower|Roboto+Mono&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/gallery.css">
+    <link rel="stylesheet" href="../css/gallery.css">
     <title>View Photos</title>
 
 </head>
@@ -15,7 +15,7 @@
     <h1 class="">Photo Gallery</h1>
   </header>
 
-    <input class="btn btn-danger my-3 float-right" type="button" onclick="window.location.href = 'index.html';" value="Upload More"/>
+    <input class="btn btn-danger my-3 float-right" type="button" onclick="window.location.href = '../index.html';" value="Upload More"/>
 
     <form method="post">
       <div class="form-group">
@@ -37,7 +37,7 @@ include "sorting.php";
 
 // -----------------------------------------------------------------------------//
 
-$dir_path = "uploads/";
+$dir_path = "../uploads/";
 $extensions_ary = array('jpg','jpeg','png');
 $photoArr = [];
 
