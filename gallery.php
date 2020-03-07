@@ -63,6 +63,10 @@
 
       .card-border { border-radius: 30px;}
 
+      .space-above {
+        margin-top : 5rem;
+      }
+
     </style>
 </head>
 
@@ -86,89 +90,12 @@
     </form>
 
 <?php
-class Photo {
-    //Properties
-    public $file_name = '';
-    public $photo_name = '';
-    public $Date = '';
-    public $Photographer = '';
-    public $Location = '';
-    public $photo_location = '';
 
-    public function __construct($file_name, $photo_name, $Date, $Photographer, $Location, $photo_location)
-    {
-        $this->file_name = $file_name;
-        $this->photo_name = $photo_name;
-        $this->Date = $Date;
-        $this->Photographer = $Photographer;
-        $this->Location = $Location;
-        $this->photo_location = $photo_location;
-    }
+include "connect.php";
+include "photo.php";
+include "sorting.php";
 
-    public function get_fname(){ return $this->file_name; }
-
-    public function get_pname(){ return $this->photo_name; }
-
-    public function get_date(){ return $this->Date; }
-
-    public function get_photographer(){ return $this->Photographer; }
-
-    public function get_location(){ return $this->Location; }
-
-}
-
-function compareByTimeStamp($time1, $time2)
-{
-    if (strtotime($time1) < strtotime($time2))
-        return 1;
-    else if (strtotime($time1) > strtotime($time2))
-        return -1;
-    else
-        return 0;
-}
-
-function sortBy($arr, $opt)
-{
-    switch($opt) {
-        case 0:
-            usort($arr, function($a, $b)
-            {
-                return strnatcmp(strtolower($a->get_fname()), strtolower($b->get_fname()));
-            });
-            break;
-
-        case 1:
-            usort($arr, function($a, $b)
-            {
-                return strnatcmp(strtolower($a->get_pname()), strtolower($b->get_pname()));
-            });
-            break;
-
-        case 2:
-            usort($arr, function($a, $b)
-            {
-                return compareByTimeStamp($a->get_date(), $b->get_date());
-            });
-            break;
-
-        case 3:
-            usort($arr, function($a, $b)
-            {
-                return strnatcmp( strtolower($a->get_photographer()) , strtolower($b->get_photographer()));
-            });
-            break;
-
-        case 4:
-            usort($arr, function($a, $b)
-            {
-                return strnatcmp(strtolower($a->get_location()), strtolower($b->get_location()));
-            });
-            break;
-
-    }
-
-    return $arr;
-}
+// -----------------------------------------------------------------------------//
 
 $dir_path = "uploads/";
 $extensions_ary = array('jpg','jpeg','png');
@@ -182,25 +109,8 @@ else {
   $selected_key = 'name';
 }
 
-$file = fopen("uploads/list.txt", 'r');
-flock($file, LOCK_SH);
-
 #Loads array with objects of photos.
-while (!feof($file))
-{
-  $fname = fgets($file);
-  $pname = fgets($file);
-  $Date = fgets($file);
-  $Photographer = fgets($file);
-  $Location = fgets($file);
-  $photo_location = $dir_path.$fname;
-
-  $p1 = new Photo($fname, $pname, $Date, $Photographer, $Location, $photo_location);
-  array_push($photoArr, $p1);
-}
-
-//Shortens array to remove empty element.
-unset($photoArr[sizeof($photoArr)-1]);
+$photoArr = Load_Photos_Table($photoArr);
 
 #Gets information from dropdown to sort.
 if($selected_key == 'name')
@@ -219,34 +129,34 @@ elseif ($selected_key == 'location')
 {
   $photoArr = sortBy($photoArr, 4);
 }
-echo "<div class='card text-center card-color card-border'> ";
-echo "<div class='row justify-content-center my-5'>";
+
+// ----------------------------------------------------------------------
+
+echo "<div class='card text-center card-color card-border container '> ";
+echo "<div class='row justify-content-around my-5'>";
 
 #Displays each photo
 for($x = 0; $x < sizeof($photoArr); $x++)
 {
   $fname = $photoArr[$x]->get_fname();
-
-  echo "<div class='photo-container-size desc-size'>";
+  
+  echo "<div class='desc-size col-4'>";
   echo "<img class='' style='width:80%;height:60%;' src='$dir_path$fname'> <br>
-  <p class='d-block' >Photo Name: <span>" . $photoArr[$x]->get_pname() . "</span></p>
-  <p class='d-block' >Date Taken: <span>" . $photoArr[$x]->get_date() . "</span></p>
-  <p class='d-block' >Photographer: <span>" . $photoArr[$x]->get_photographer() . "</span></p>
-  <p class='d-block' >Location: <span>" . $photoArr[$x]->get_location() . "</span></p>
-  ";
+  <p class='' >Photo Name: <span>" . $photoArr[$x]->get_pname() . "</span></p>
+  <p class='' >Date Taken: <span>" . $photoArr[$x]->get_date() . "</span></p>
+  <p class='' >Photographer: <span>" . $photoArr[$x]->get_photographer() . "</span></p>
+  <p class='' >Location: <span>" . $photoArr[$x]->get_location() . "</span></p>";
   echo "</div>";
-  if ($x%2 == 0 && $x !=0)
+
+  if (($x+1)%3 == 0)
   {
     echo "</div>";
-    echo "<div class='row justify-content-center my-5'> ";
+    echo "<div class='row justify-content-around my-5'>";
   }
-
+  
 }
-
 echo "</div>";
-
-flock($file, LOCK_UN);
-fclose($file);
+echo "</div>";
 ?>
 
 </body>

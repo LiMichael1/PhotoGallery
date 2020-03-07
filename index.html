@@ -54,21 +54,30 @@
 </html>
 
 <?php
+	include "connect.php";
+	
 	#If Upload is pressed, it will check to see if file was properly uploaded
 	if(isset($_POST["submit"]))
 	{
+		//if file already exists-> add an underscore 
+		if(is_Photo_in_table($_FILES["SelectFile"]["name"]))
+		{
+			$_FILES["SelectFile"]["name"] = "_" . $_FILES["SelectFile"]["name"];  
+		}
 		$target_dir = "uploads/";
-		$target_file = $target_dir.basename($_FILES["SelectFile"]["name"]);
+		$target_file = $target_dir.$_FILES["SelectFile"]["name"];
+		
+
 		$uploadOK = 1;
 		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-		$check = getimagesize($_FILES["SelectFile"]["tmp_name"]);
+		$check = exif_imagetype($_FILES["SelectFile"]["tmp_name"]);
 
 		echo $target_file."<br>";
 
 		#Checks if file is valid.
 		if($check !== false)
 		{
-			echo "File is an image - ".$check["mime"].". "."<br>";
+			echo "File is an image - ".$imageFileType.". "."<br>";
 			$uploadOK = 1;
 		}
 		else
@@ -77,25 +86,19 @@
 			$uploadOK = 0;
 		}
 
-		if(move_uploaded_file($_FILES["SelectFile"]["tmp_name"],$target_file))
-		{
-			#$fp = fopen("uploads\list.txt", 'w') or die("Unable to open file!");
-			file_put_contents("uploads/list.txt", basename($_FILES["SelectFile"]["name"]), FILE_APPEND);
-			file_put_contents("uploads/list.txt", "\n", FILE_APPEND);
-			file_put_contents("uploads/list.txt", $_POST['photoname'], FILE_APPEND);
-			file_put_contents("uploads/list.txt", "\n", FILE_APPEND);
-			file_put_contents("uploads/list.txt", $_POST['datetaken'], FILE_APPEND);
-			file_put_contents("uploads/list.txt", "\n", FILE_APPEND);
-			file_put_contents("uploads/list.txt", $_POST['photographer'], FILE_APPEND);
-			file_put_contents("uploads/list.txt", "\n", FILE_APPEND);
-			file_put_contents("uploads/list.txt", $_POST['location'], FILE_APPEND);
-			file_put_contents("uploads/list.txt", "\n", FILE_APPEND);
-			echo "The file ".basename($_FILES["SelectFile"]["name"])." has been uploaded.";
-			#fclose($fp);
-		}
-		else
-		{
-			echo "Fucking didn't work.";
+		if($uploadOK == 1) {
+			if(move_uploaded_file($_FILES["SelectFile"]["tmp_name"],$target_file))
+			{
+				Photo_table_insert($_POST['photoname'], 
+								basename($_FILES["SelectFile"]["name"]), 
+								$_POST['datetaken'], 
+								$_POST['location'], 
+								$_POST['photographer']);
+			}
+			else
+			{
+				echo "Fucking didn't work.";
+			}
 		}
 	}
 ?>
