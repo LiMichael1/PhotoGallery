@@ -48,8 +48,6 @@
             echo 'Error: Unable to enter SQL Query<br>';
         }
 
-        
-
         $db->close();
     }
 
